@@ -31,7 +31,7 @@ if true
     [y, Fs] = audioread('panther.mp3');
     sound(y, Fs, 16);
 end
-
+h = figure;
 for i = 1:total_frames
     clf
     disp(["Frame: ", i]);
@@ -47,6 +47,14 @@ for i = 1:total_frames
     drawPanther(i, H, B, A, LR, LL, T);
     hold off;
     pause(1/fps);
+    frame = getframe(h); 
+    im = frame2im(frame); 
+    [imind,cm] = rgb2ind(im,256); 
+    if i == 1 
+        imwrite(imind,cm,'dancingPanther.gif','gif', 'Loopcount',inf); 
+    else 
+        imwrite(imind,cm,'dancingPanther.gif','gif','WriteMode','append'); 
+    end 
 end
 % end
 clear sound;
